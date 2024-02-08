@@ -1,27 +1,37 @@
 package src;
 
-public class Peluche extends Juguete {
+public class Peluche extends Juguete implements Cloneable {
     private String materialExterior;
     private String relleno;
-    private String sonido;
-    private double altura;
 
-    public Peluche(String color, String materialExterior, String relleno, String sonido, double altura) {
-        super(color);
+    public Peluche(String color, String materialExterior, String relleno, int id) {
+        super(color, id);
         this.materialExterior = materialExterior;
         this.relleno = relleno;
-        this.sonido = sonido;
-        this.altura = altura;
+    }
+
+    public String getMaterialExterior() {
+        return materialExterior;
+    }
+
+    public void setMaterialExterior(String materialExterior) {
+        this.materialExterior = materialExterior;
+    }
+
+    public String getRelleno() {
+        return relleno;
+    }
+
+    public void setRelleno(String relleno) {
+        this.relleno = relleno;
+    }
+    @Override
+    public Peluche clone() throws CloneNotSupportedException {
+        return (Peluche) super.clone();
     }
 
     public void mostrarDetalles() {
-        System.out.println("*********************");
-        System.out.println("*      Peluche      *");
-        System.out.println("*********************");
         super.mostrarDetalles();
-        System.out.println("Material Exterior: " + materialExterior);
-        System.out.println("Relleno: " + relleno);
-        System.out.println("Sonido: "+ sonido);
-        System.out.println("Altura: "+ altura);
+        System.out.println(" | Material Exterior: " + materialExterior + " | Relleno: " + relleno);
     }
 }

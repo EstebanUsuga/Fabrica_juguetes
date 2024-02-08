@@ -19,13 +19,25 @@ public class Juguete {
     private String color;
     private int id;
 
-    public Juguete(String color) {
+    public Juguete(String color, int id) {
         this.color = color;
+        this.id = id;
     }
 
-        public void  mostrarDetalles() {
-        System.out.println("Color: "+ color);
+    public void setId(int id) {
+        this.id = id;
+    }
 
-        }
+    public int getId() {
+        return this.id;
+    }
 
+    @Override
+    public Juguete clone() throws CloneNotSupportedException {
+        return (Juguete) super.clone();
+    }
+
+    public void mostrarDetalles() {
+        System.out.println("ID: " + id + " | Color: " + color);
+    }
 }
