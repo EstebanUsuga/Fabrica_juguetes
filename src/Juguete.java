@@ -16,6 +16,8 @@ package src;//Fábrica de Juguetes
 
 public class Juguete {
 
+    public static int contadorId = 1;
+
     private String color;
     private int id;
 
