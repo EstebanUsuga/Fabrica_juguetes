@@ -6,6 +6,9 @@ import java.util.List;
 
 public class AccionClonar implements Accion {
 
+    private static AccionClonar instanciaAccion;
+    private AccionClonar() {}
+
     @Override
     public List<Juguete> ejecutar(List<Juguete> juguetes) {
         System.out.println("Clonar Juguete:");
@@ -21,6 +24,14 @@ public class AccionClonar implements Accion {
 
         return juguetes;
     }
+
+        public static Accion getInstance() {
+            if (instanciaAccion == null){
+                instanciaAccion = new AccionClonar();
+            }else {
+                throw new IllegalStateException("Ya se ha creado una instancia de esta accion.");
+            }
+            return instanciaAccion;    }
 
     private void clonarJuguete(int idClonar, int cantidadClones, List<Juguete> listadoJuguetes) throws CloneNotSupportedException {
         for (Juguete juguete : listadoJuguetes) {

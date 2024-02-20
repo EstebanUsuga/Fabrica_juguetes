@@ -21,11 +21,15 @@ public class Juguete {
     private String color;
     private int id;
 
+
     public Juguete(String color, int id) {
         this.color = color;
         this.id = id;
     }
 
+    public String getColor() {
+        return color;
+    }
     public void setId(int id) {
         this.id = id;
     }
@@ -33,6 +37,8 @@ public class Juguete {
     public int getId() {
         return this.id;
     }
+
+
 
     @Override
     public Juguete clone() throws CloneNotSupportedException {

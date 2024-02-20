@@ -1,10 +1,10 @@
-package src.factory;
+package src.strategy;
 
 import src.Juguete;
 
 import java.util.Scanner;
 
-public interface CreadorJuguete {
+public interface AccionCrearJuguete {
 
     Scanner scanner = new Scanner(System.in);
 

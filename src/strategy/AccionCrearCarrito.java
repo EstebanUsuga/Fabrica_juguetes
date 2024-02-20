@@ -1,11 +1,27 @@
-package src.factory;
+package src.strategy;
 
 import src.Carrito;
 import src.Juguete;
 
-public class CreadorCarrito implements CreadorJuguete {
+import java.util.List;
 
-    @Override
+public class AccionCrearCarrito implements Accion {
+
+    private static AccionCrearCarrito instanciaAccion;
+    private AccionCrearCarrito(){}
+
+
+        public static AccionCrearCarrito getInstance() {
+            if (instanciaAccion == null){
+                instanciaAccion = new AccionCrearCarrito();
+            }else{
+                throw new IllegalStateException("Ya se ha creado una instancia de esta accion.");
+            }
+            return instanciaAccion;
+        }
+
+
+
     public Juguete crear() {
         System.out.println("Crear un Carrito");
         System.out.print("Ingrese el tipo de carrito:  ");
@@ -25,5 +41,10 @@ public class CreadorCarrito implements CreadorJuguete {
                 .tipo(tipoCarrito)
                 .numeroPuertas(numeroPuertasCarrito)
                 .build();
+    }
+
+    @Override
+    public List<Juguete> ejecutar(List<Juguete> juguetes) {
+        return null;
     }
 }
