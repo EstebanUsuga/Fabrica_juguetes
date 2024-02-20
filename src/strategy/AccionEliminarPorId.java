@@ -1,21 +1,19 @@
 package src.strategy;
 
-import src.Juguete;
+import src.dominio.Juguete;
+import src.util.LectorTeclado;
 
 import java.util.List;
 
 public class AccionEliminarPorId implements Accion {
 
-
-
     private static AccionEliminarPorId instanciaAccion;
+
     private AccionEliminarPorId(){}
 
     public static AccionEliminarPorId getInstance() {
         if (instanciaAccion == null) {
             instanciaAccion = new AccionEliminarPorId();
-        } else {
-            throw new IllegalStateException("Ya se ha creado una instancia de esta accion.");
         }
 
         return instanciaAccion;
@@ -24,13 +22,10 @@ public class AccionEliminarPorId implements Accion {
     @Override
     public List<Juguete> ejecutar(List<Juguete> juguetes) {
         System.out.println("Eliminar Juguete:");
-        System.out.print("Ingrese el ID del kuguete que desea eliminar: ");
-        int idEliminar = scanner.nextInt();
+        int idEliminar = LectorTeclado.leerInt("Ingrese el ID del juguete que desea eliminar: ");
         eliminarJuguete(idEliminar, juguetes);
         return juguetes;
     }
-
-
 
     private void eliminarJuguete(int idEliminar, List<Juguete> listadoJuguetes) {
         for (Juguete juguete : listadoJuguetes) {
