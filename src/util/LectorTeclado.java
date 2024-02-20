@@ -13,8 +13,19 @@ public class LectorTeclado {
 
     public static int leerInt(String mensaje) {
         System.out.println(mensaje);
-        int entero = scanner.nextInt();
-        scanner.nextLine();
+        int entero = 0;
+        boolean debeContinuar = true;
+
+        do {
+            try {
+                entero = scanner.nextInt();
+                debeContinuar = false;
+            } catch (Exception exception) {
+                System.out.println("Debe ingresar un número entero");
+            }
+            scanner.nextLine();
+        } while(debeContinuar);
+
         return entero;
     }
 }
