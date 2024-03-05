@@ -29,6 +29,16 @@ public class AccionEliminarPorColor implements Accion {
         return juguetes;
     }
 
+    @Override
+    public String obtenerOpcionComoString() {
+        return formatearMensaje("Eliminar juguetes por color"); //5. Eliminar juguetes por color
+    }
+
+    @Override
+    public int obtenerOpcion() {
+        return 5;
+    }
+
     private void eliminarJuguetesPorColor(String colorEliminar, List<Juguete> juguetes) {
         juguetes.removeIf(juguete -> juguete.getColor().equalsIgnoreCase(colorEliminar));
         System.out.println("Juguetes con el color '" + colorEliminar + "' eliminados exitosamente.");

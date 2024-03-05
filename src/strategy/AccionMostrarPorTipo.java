@@ -49,4 +49,14 @@ public class AccionMostrarPorTipo implements Accion {
 
         return juguetes;
     }
+
+    @Override
+    public String obtenerOpcionComoString() {
+        return formatearMensaje("Mostrar juguetes por tipo");
+    }
+
+    @Override
+    public int obtenerOpcion() {
+        return 6;
+    }
 }

@@ -25,6 +25,16 @@ public class AccionClonar implements Accion {
         return juguetes;
     }
 
+    @Override
+    public String obtenerOpcionComoString() {
+        return formatearMensaje("Clonar Juguete"); //2. Clonar Juguete
+    }
+
+    @Override
+    public int obtenerOpcion() {
+        return 2;
+    }
+
     public static Accion getInstance() {
         if (instanciaAccion == null){
             instanciaAccion = new AccionClonar();

@@ -1,11 +1,8 @@
 package src;
 
 import src.dominio.Juguete;
-import src.strategy.AccionClonar;
-import src.strategy.AccionCrear;
-import src.strategy.AccionEliminarPorColor;
-import src.strategy.AccionEliminarPorId;
-import src.strategy.AccionMostrar;
+import src.strategy.Accion;
+import src.strategy.AccionHandler;
 import src.util.LectorTeclado;
 
 import java.util.ArrayList;
@@ -31,32 +28,35 @@ import java.util.List;
 
 public class Menu {
 
-    public static void imprimir() {
-        List<Juguete> listadoJuguetes = new ArrayList<>();
+    private static final AccionHandler accionHandler = AccionHandler.getInstance();
+    private static final List<Juguete> listadoJuguetes = new ArrayList<>();
 
+    public static void imprimir() {
         int opcion;
 
         do {
-            System.out.println("Menu de opciones:");
-            System.out.println("1. Crear Juguete");
-            System.out.println("2. Clonar Juguete");
-            System.out.println("3. Eliminar Juguete");
-            System.out.println("4. Mostrar Juguetes Registrados");
-            System.out.println("5. Eliminar juguetes por color");
-            System.out.println("0. Salir");
+            imprimirOpciones();
             opcion = LectorTeclado.leerInt("Ingrese su opción: ");
-
-            switch (opcion) {
-                case 1 -> AccionCrear.getInstance().ejecutar(listadoJuguetes);
-                case 2 -> AccionClonar.getInstance().ejecutar(listadoJuguetes);
-                case 3 -> AccionEliminarPorId.getInstance().ejecutar(listadoJuguetes);
-                case 4 -> AccionMostrar.getInstance().ejecutar(listadoJuguetes);
-                case 5 -> AccionEliminarPorColor.getInstance().ejecutar(listadoJuguetes);
-                case 0 -> System.out.println("Salir del programa ¡Hasta pronto!");
-                default -> System.out.println("Opción no válida. Intente de nuevo.");
-            }
-
+            ejecutarOpcion(opcion);
         } while (opcion != 0);
 
+        System.out.println("Salir del programa ¡Hasta pronto!");
+    }
+
+    private static void ejecutarOpcion(int opcion) {
+        if(opcion != 0) {
+            try {
+                accionHandler.getMapeo().get(opcion).ejecutar(listadoJuguetes);
+            } catch (Exception exception) {
+                System.out.println("Opción no válida, intentelo de nuevo");
+            }
+        }
+    }
+
+    private static void imprimirOpciones() {
+        System.out.println("Menu de opciones:");
+        accionHandler.getMapeo().values()
+                .forEach(accion -> System.out.println(accion.obtenerOpcionComoString()));
+        System.out.println("0. Salir");
     }
 }

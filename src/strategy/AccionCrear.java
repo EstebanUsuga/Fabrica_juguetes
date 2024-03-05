@@ -21,12 +21,22 @@ public class AccionCrear implements Accion {
         int opcion = LectorTeclado.leerInt("Opcion: ");
 
         switch(opcion) {
-            case 1: juguetes.add(CreadorPeluche.getInstance().crear());
-            case 2: juguetes.add(CreadorCarrito.getInstance().crear());
-            default: System.out.println("Opción no válida");
+            case 1 -> juguetes.add(CreadorPeluche.getInstance().crear());
+            case 2 -> juguetes.add(CreadorCarrito.getInstance().crear());
+            default -> System.out.println("Opción no válida");
         }
 
         return juguetes;
+    }
+
+    @Override
+    public String obtenerOpcionComoString() {
+        return formatearMensaje("Crear Juguete"); // 1. Crear Juguete
+    }
+
+    @Override
+    public int obtenerOpcion() {
+        return 1;
     }
 
     public static AccionCrear getInstance() {

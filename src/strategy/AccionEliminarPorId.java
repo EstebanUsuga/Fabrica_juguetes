@@ -27,14 +27,28 @@ public class AccionEliminarPorId implements Accion {
         return juguetes;
     }
 
+    @Override
+    public String obtenerOpcionComoString() {
+        return formatearMensaje("Eliminar Juguete por ID"); //3. Eliminar Juguete por ID
+    }
+
+    @Override
+    public int obtenerOpcion() {
+        return 3;
+    }
+
     private void eliminarJuguete(int idEliminar, List<Juguete> listadoJuguetes) {
-        for (Juguete juguete : listadoJuguetes) {
-            if (juguete.getId() == idEliminar) {
-                listadoJuguetes.remove(juguete);
-                System.out.println("Juguete eliminado exitosamente.");
-                return;
-            }
-        }
-        System.out.println("No se encontró un juguete con el ID especificado.");
+        listadoJuguetes.stream()
+                .filter(juguete -> juguete.getId() == idEliminar) //[]
+                .findFirst()// 1 solo elemento
+                .ifPresentOrElse(
+                        juguete -> eliminarJuguete(juguete, listadoJuguetes),
+                        () -> System.out.println("No se encontró un juguete con el ID especificado.")
+                );
+    }
+
+    private void eliminarJuguete(Juguete juguete, List<Juguete> listadoJuguetes) {
+        listadoJuguetes.remove(juguete);
+        System.out.println("Juguete " + juguete.getId() + " ha sido eliminado");
     }
 }
