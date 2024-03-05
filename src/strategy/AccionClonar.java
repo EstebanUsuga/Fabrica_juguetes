@@ -1,21 +1,21 @@
 package src.strategy;
 
-import src.Juguete;
+import src.dominio.Juguete;
+import src.util.LectorTeclado;
 
 import java.util.List;
 
 public class AccionClonar implements Accion {
 
     private static AccionClonar instanciaAccion;
+
     private AccionClonar() {}
 
     @Override
     public List<Juguete> ejecutar(List<Juguete> juguetes) {
         System.out.println("Clonar Juguete:");
-        System.out.print("Ingrese el ID del juguete que desea clonar: ");
-        int idClonar = scanner.nextInt();
-        System.out.print("Ingrese el número de clones que desea crear: ");
-        int cantidadClones = scanner.nextInt();
+        int idClonar = LectorTeclado.leerInt("Ingrese el ID del juguete que desea clonar: ");
+        int cantidadClones = LectorTeclado.leerInt("Ingrese el número de clones que desea crear: ");
         try {
             clonarJuguete(idClonar, cantidadClones, juguetes);
         } catch (CloneNotSupportedException e) {
@@ -25,13 +25,23 @@ public class AccionClonar implements Accion {
         return juguetes;
     }
 
-        public static Accion getInstance() {
-            if (instanciaAccion == null){
-                instanciaAccion = new AccionClonar();
-            }else {
-                throw new IllegalStateException("Ya se ha creado una instancia de esta accion.");
-            }
-            return instanciaAccion;    }
+    @Override
+    public String obtenerOpcionComoString() {
+        return formatearMensaje("Clonar Juguete"); //2. Clonar Juguete
+    }
+
+    @Override
+    public int obtenerOpcion() {
+        return 2;
+    }
+
+    public static Accion getInstance() {
+        if (instanciaAccion == null){
+            instanciaAccion = new AccionClonar();
+        }
+
+        return instanciaAccion;
+    }
 
     private void clonarJuguete(int idClonar, int cantidadClones, List<Juguete> listadoJuguetes) throws CloneNotSupportedException {
         for (Juguete juguete : listadoJuguetes) {

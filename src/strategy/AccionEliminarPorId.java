@@ -1,21 +1,19 @@
 package src.strategy;
 
-import src.Juguete;
+import src.dominio.Juguete;
+import src.util.LectorTeclado;
 
 import java.util.List;
 
 public class AccionEliminarPorId implements Accion {
 
-
-
     private static AccionEliminarPorId instanciaAccion;
+
     private AccionEliminarPorId(){}
 
     public static AccionEliminarPorId getInstance() {
         if (instanciaAccion == null) {
             instanciaAccion = new AccionEliminarPorId();
-        } else {
-            throw new IllegalStateException("Ya se ha creado una instancia de esta accion.");
         }
 
         return instanciaAccion;
@@ -24,22 +22,33 @@ public class AccionEliminarPorId implements Accion {
     @Override
     public List<Juguete> ejecutar(List<Juguete> juguetes) {
         System.out.println("Eliminar Juguete:");
-        System.out.print("Ingrese el ID del kuguete que desea eliminar: ");
-        int idEliminar = scanner.nextInt();
+        int idEliminar = LectorTeclado.leerInt("Ingrese el ID del juguete que desea eliminar: ");
         eliminarJuguete(idEliminar, juguetes);
         return juguetes;
     }
 
+    @Override
+    public String obtenerOpcionComoString() {
+        return formatearMensaje("Eliminar Juguete por ID"); //3. Eliminar Juguete por ID
+    }
 
+    @Override
+    public int obtenerOpcion() {
+        return 3;
+    }
 
     private void eliminarJuguete(int idEliminar, List<Juguete> listadoJuguetes) {
-        for (Juguete juguete : listadoJuguetes) {
-            if (juguete.getId() == idEliminar) {
-                listadoJuguetes.remove(juguete);
-                System.out.println("Juguete eliminado exitosamente.");
-                return;
-            }
-        }
-        System.out.println("No se encontró un juguete con el ID especificado.");
+        listadoJuguetes.stream()
+                .filter(juguete -> juguete.getId() == idEliminar) //[]
+                .findFirst()// 1 solo elemento
+                .ifPresentOrElse(
+                        juguete -> eliminarJuguete(juguete, listadoJuguetes),
+                        () -> System.out.println("No se encontró un juguete con el ID especificado.")
+                );
+    }
+
+    private void eliminarJuguete(Juguete juguete, List<Juguete> listadoJuguetes) {
+        listadoJuguetes.remove(juguete);
+        System.out.println("Juguete " + juguete.getId() + " ha sido eliminado");
     }
 }

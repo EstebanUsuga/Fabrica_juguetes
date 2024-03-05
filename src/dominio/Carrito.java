@@ -1,4 +1,4 @@
-package src;
+package src.dominio;
 
 public class Carrito extends Juguete implements Cloneable {
     private String marca;

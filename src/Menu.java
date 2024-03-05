@@ -1,51 +1,62 @@
 package src;
 
-import src.strategy.AccionCrearCarrito;
-import src.strategy.AccionCrearPeluche;
-import src.strategy.AccionClonar;
-import src.strategy.AccionEliminarPorId;
-import src.strategy.AccionMostrar;
-import src.strategy.AccionEliminarPorColor;
+import src.dominio.Juguete;
+import src.strategy.Accion;
+import src.strategy.AccionHandler;
+import src.util.LectorTeclado;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
+
+/**
+ * Patrones de diseño -> soluciones a problemas comunes de software
+ * Singleton -> Sirve para crear clases con una única instancia. (save, delete, find)
+ * Builder -> Ayuda a crear objetos de una forma más flexible. Juguete.builder().id(x).name(x).relleno(x).materialExt(x).build();
+ * Strategy -> Normalmente se utiliza para casos donde hayan diferentes caminos (Switch).
+ * Prototype
+ * Factory Method
+ */
+
+/**
+ * Modificadores de acceso
+ * Public: Se puede utilizar en toda la aplicación.
+ * Private: A nivel de clase.
+ * Protected: A nivel de subclase y paquete.
+ * Default (sin modificador): A nivel paquete. XXXXX (Nunca!)
+ */
 
 public class Menu {
 
-    public static void imprimir() {
-        Scanner teclado = new Scanner(System.in);
-        List<Juguete> listadoJuguetes = new ArrayList<>();
+    private static final AccionHandler accionHandler = AccionHandler.getInstance();
+    private static final List<Juguete> listadoJuguetes = new ArrayList<>();
 
+    public static void imprimir() {
         int opcion;
 
         do {
-            System.out.println("Menu de opciones:");
-            System.out.println("1. Crear Peluche");
-            System.out.println("2. Crear Carrito");
-            System.out.println("3. Clonar Juguete");
-            System.out.println("4. Eliminar Juguete");
-            System.out.println("5. Mostrar Juguetes Registrados");
-            System.out.println("6. Eliminar juguetes por color");
-            System.out.println("0. Salir");
-            System.out.print("Ingrese su opción: ");
-
-            opcion = teclado.nextInt();
-            teclado.nextLine();
-
-            switch (opcion) {
-                case 1 -> listadoJuguetes.add(AccionCrearPeluche.getInstance().crear());
-                case 2 -> listadoJuguetes.add(AccionCrearCarrito.getInstance().crear());
-                case 3 -> AccionClonar.getInstance().ejecutar(listadoJuguetes);
-                case 4 -> AccionEliminarPorId.getInstance().ejecutar(listadoJuguetes);
-                case 5 -> AccionMostrar.getInstance().ejecutar(listadoJuguetes);
-                case 6 -> AccionEliminarPorColor.getInstance().ejecutar(listadoJuguetes);
-                case 0 -> System.out.println("Salir del programa ¡Hasta pronto!");
-                default -> System.out.println("Opción no válida. Intente de nuevo.");
-            }
-
+            imprimirOpciones();
+            opcion = LectorTeclado.leerInt("Ingrese su opción: ");
+            ejecutarOpcion(opcion);
         } while (opcion != 0);
 
-        teclado.close();
+        System.out.println("Salir del programa ¡Hasta pronto!");
+    }
+
+    private static void ejecutarOpcion(int opcion) {
+        if(opcion != 0) {
+            try {
+                accionHandler.getMapeo().get(opcion).ejecutar(listadoJuguetes);
+            } catch (Exception exception) {
+                System.out.println("Opción no válida, intentelo de nuevo");
+            }
+        }
+    }
+
+    private static void imprimirOpciones() {
+        System.out.println("Menu de opciones:");
+        accionHandler.getMapeo().values()
+                .forEach(accion -> System.out.println(accion.obtenerOpcionComoString()));
+        System.out.println("0. Salir");
     }
 }

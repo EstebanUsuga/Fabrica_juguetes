@@ -1,4 +1,4 @@
-package src;//Fábrica de Juguetes
+package src.dominio;//Fábrica de Juguetes
 //
 //Hay una fábrica de juguetes que está especializada en producir peluches y carritos.
 //Esta fábrica quiere automatizar los procesos de creación y registro de los diferentes juguetes que se producen en el día.
@@ -6,7 +6,7 @@ package src;//Fábrica de Juguetes
 //Creación:
 //a. Implementación para la creación de Peluche, en la cual se le pedirá al
 //usuario ingresar los atributos materialExterior, relleno y color.
-//b. Implementación para la creación de src.Carrito, en la cual se le pedirá al
+//b. Implementación para la creación de src.dominio.Carrito, en la cual se le pedirá al
 //usuario ingresar los atributos color, marca y numeroPuertas.
 //c. El elemento creado debe ser agregado a la lista.
 //
